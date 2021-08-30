@@ -110,4 +110,4 @@ resource "null_resource" "jumpbox" {
         "curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
       ]
     }
-
+}
