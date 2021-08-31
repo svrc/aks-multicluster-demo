@@ -92,6 +92,7 @@ resource "azurerm_linux_virtual_machine" "jumpbox_vm" {
     var.tags,
     { name = "${var.environment_name}-jumpbox-vm" },
    )  
+lifecycle {                                                                                                                           prevent_destroy = true                                                                                                              }  
 }
 
 resource "null_resource" "jumpbox" {
@@ -106,7 +107,7 @@ resource "null_resource" "jumpbox" {
         "sudo  curl -L https://carvel.dev/install.sh | sudo bash",
         "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\" && sudo mv kubectl /usr/local/bin && sudo chmod +x /usr/local/bin/kubectl",
         "curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.7.6 bash", 
-        "echo export PATH=\"$PATH:/home/tanzu/istio-1.7.6/bin\"\\nalias k=kubectl\\nalias kc=\"kubectl config\"\\n\" >> .bashrc",
+        "echo export PATH=\"$PATH:/home/tanzu/istio-1.7.6/bin\"\\nalias k=kubectl\\nalias kc=\"kubectl config\"\\n >> .bashrc",
         "curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash"
       ]
     }

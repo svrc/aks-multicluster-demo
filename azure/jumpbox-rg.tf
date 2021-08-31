@@ -6,4 +6,7 @@ resource "azurerm_resource_group" "platform" {
     var.tags,
     { name = "${var.environment_name}" },
   )
+  lifecycle {
+   prevent_destroy = true
+  }
 }
