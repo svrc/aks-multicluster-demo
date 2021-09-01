@@ -1,12 +1,15 @@
-resource "azurerm_subnet" "cluster2" {
-  name = "${var.environment_name}-cluster2-subnet"
 
-  enforce_private_link_endpoint_network_policies = true
+
+resource "azurerm_user_assigned_identity" "cluster2-identity" {
+  name = "tanzu-umi"
   resource_group_name  = azurerm_resource_group.platform.name
-  virtual_network_name = azurerm_virtual_network.platform.name
-  address_prefix       = cidrsubnet("10.0.0.0/16", 8, 9)
+  location             = var.location 
+  
+     
+   lifecycle { 
+    prevent_destroy = true                                                                                                              
+   }  
 }
-
 
 resource "azurerm_kubernetes_cluster" "cluster2" {
   name                    = "${var.environment_name}-cluster2-aks"
@@ -31,7 +34,8 @@ resource "azurerm_kubernetes_cluster" "cluster2" {
   }
 
   identity {
-    type = "SystemAssigned"
+    type = "UserAssigned"
+	user_assigned_identity_id = azurerm_user_assigned_identity.cluster2-identity.id
   }
 
   tags = merge(
@@ -54,4 +58,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "cluster2" {
     var.tags,
     { name = "${var.environment_name}-cluster2-aks-workers" },
   )
+     lifecycle {
+    ignore_changes = [
+	 node_labels, node_taints
+	]
+  }
 }

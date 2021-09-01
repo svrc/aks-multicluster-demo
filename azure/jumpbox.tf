@@ -16,18 +16,80 @@ resource "azurerm_network_security_group" "jumpbox" {
   location            = var.location
   resource_group_name = azurerm_resource_group.platform.name
 
-  security_rule {
-    name                       = "ssh"
-    priority                   = 200
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = 22
-    source_address_prefix      = "Internet"
-    destination_address_prefix = "*"
-  }
-
+  security_rule = [ 
+   {
+      access                                     = "Allow"
+      description                                = ""
+      destination_address_prefix                 = "10.0.8.4"
+      destination_address_prefixes               = []
+      destination_application_security_group_ids = []
+      destination_port_range                     = "*"
+      destination_port_ranges                    = []
+      direction                                  = "Inbound"
+      name                                       = "ssh"
+      priority                                   = 200
+      protocol                                   = "TCP"
+      source_address_prefix                      = "Internet"
+      source_address_prefixes                    = []
+      source_application_security_group_ids      = []
+      source_port_range                          = "*"
+      source_port_ranges                         = []
+   },
+  {
+      access                                     = "Allow"
+      description                                = ""
+      destination_address_prefix                 = "10.0.0.0/16"
+      destination_address_prefixes               = []
+      destination_application_security_group_ids = []
+      destination_port_range                     = "*"
+      destination_port_ranges                    = []
+      direction                                  = "Inbound"
+      name                                       = "icmp_google"
+      priority                                   = 230
+      protocol                                   = "ICMP"
+      source_address_prefix                      = "10.150.0.0/20"
+      source_address_prefixes                    = []
+      source_application_security_group_ids      = []
+      source_port_range                          = "*"
+      source_port_ranges                         = []
+   },
+   {
+      access                                     = "Allow"
+      description                                = ""
+      destination_address_prefix                 = "10.0.0.0/16"
+      destination_address_prefixes               = []
+      destination_application_security_group_ids = []
+      destination_port_range                     = "22"
+      destination_port_ranges                    = []
+      direction                                  = "Inbound"
+      name                                       = "ssh_google"
+      priority                                   = 210
+      protocol                                   = "TCP"
+      source_address_prefix                      = "10.150.0.0/20"
+      source_address_prefixes                    = []
+      source_application_security_group_ids      = []
+      source_port_range                          = "*"
+      source_port_ranges                         = []
+   },
+    {
+      access                                     = "Allow"
+      description                                = ""
+      destination_address_prefix                 = "10.0.0.0/16"
+      destination_address_prefixes               = []
+      destination_application_security_group_ids = []
+      destination_port_range                     = "443"
+      destination_port_ranges                    = []
+      direction                                  = "Inbound"
+      name                                       = "https_google"
+      priority                                   = 211
+      protocol                                   = "TCP"
+      source_address_prefix                      = "10.150.0.0/20"
+      source_address_prefixes                    = []
+      source_application_security_group_ids      = []
+      source_port_range                          = "*"
+      source_port_ranges                         = []
+   }
+  ]
   tags = merge(
     var.tags,
     { name = "${var.environment_name}-jumpbox-network-sg" },
@@ -92,7 +154,10 @@ resource "azurerm_linux_virtual_machine" "jumpbox_vm" {
     var.tags,
     { name = "${var.environment_name}-jumpbox-vm" },
    )  
-lifecycle {                                                                                                                           prevent_destroy = true                                                                                                              }  
+   
+   lifecycle { 
+    prevent_destroy = true                                                                                                              
+   }  
 }
 
 resource "null_resource" "jumpbox" {

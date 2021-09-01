@@ -1,4 +1,13 @@
 
+
+resource "azurerm_user_assigned_identity" "control-plane-identity" {
+  name = "tanzu-umi"
+  resource_group_name  = azurerm_resource_group.platform.name
+  location             = var.location 
+  
+     
+}
+
 resource "azurerm_kubernetes_cluster" "control-plane" {
   name                    = "${var.environment_name}-control-plane-aks"
   location                = var.location
@@ -22,7 +31,8 @@ resource "azurerm_kubernetes_cluster" "control-plane" {
   }
 
   identity {
-    type = "SystemAssigned"
+    type = "UserAssigned"
+	user_assigned_identity_id = azurerm_user_assigned_identity.control-plane-identity.id
   }
 
   tags = merge(
@@ -45,4 +55,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "control-plane" {
     var.tags,
     { name = "${var.environment_name}-control-plane-aks-workers" },
   )
+     lifecycle {
+    ignore_changes = [
+	 node_labels, node_taints
+	]
+  }
+  
 }

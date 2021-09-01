@@ -25,11 +25,11 @@ locals {
 
    # platform_vms_security_group_name = azurerm_network_security_group.platform-vms.name
 
-    workloads_subnet_name    = azurerm_subnet.workloads.name
-    workloads_subnet_id      = azurerm_subnet.workloads.id
-    workloads_subnet_cidr    = azurerm_subnet.workloads.address_prefix
-    workloads_subnet_gateway = cidrhost(azurerm_subnet.workloads.address_prefix, 1)
-    workloads_subnet_range   = cidrhost(azurerm_subnet.workloads.address_prefix, 10)
+    #workloads_subnet_name    = azurerm_subnet.workloads.name
+    #workloads_subnet_id      = azurerm_subnet.workloads.id
+    #workloads_subnet_cidr    = azurerm_subnet.workloads.address_prefix
+    #workloads_subnet_gateway = cidrhost(azurerm_subnet.workloads.address_prefix, 1)
+    #workloads_subnet_range   = cidrhost(azurerm_subnet.workloads.address_prefix, 10)
 
     control_plane_kubeconfig = azurerm_kubernetes_cluster.control-plane.kube_config_raw
     cluster1_kubeconfig = azurerm_kubernetes_cluster.cluster1.kube_config_raw
