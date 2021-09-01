@@ -1,0 +1,14 @@
+apiVersion: mutations.gatekeeper.sh/v1alpha1
+kind: AssignMetadata
+metadata:
+  name: internal-lb-only
+spec:
+  match:
+    scope: Namespaced
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Service"]
+  location: metadata.annotations."service.beta.kubernetes.io/azure-load-balancer-internal"
+  parameters:
+    assign:
+      value: "true"
