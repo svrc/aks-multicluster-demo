@@ -1,0 +1,14 @@
+apiVersion: mutations.gatekeeper.sh/v1alpha1
+kind: AssignMetadata
+metadata:
+  name: internal-lb-only
+spec:
+  match:
+    scope: Namespaced
+    kinds:
+    - apiGroups: [""]
+      kinds: ["Service"]
+  location: metadata.annotations."networking.gke.io/load-balancer-type"
+  parameters:
+    assign:
+      value: "Internal"
