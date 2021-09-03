@@ -12,21 +12,24 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "*"
+    - "petclinic.***REMOVED***"
+    - "127.0.0.1"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: api-gateway-petclinic
+  namespace: spring-petclinic
 spec:
   hosts:
-  - "petclinic.com"
+  - "petclinic.***REMOVED***"
+  - "127.0.0.1"
   gateways:
   - api-gateway-petclinic
   http:
   - match:
     - uri:
-        exact: /
+        prefix: /
     route:
     - destination:
         host: api-gateway.lab.***REMOVED***
