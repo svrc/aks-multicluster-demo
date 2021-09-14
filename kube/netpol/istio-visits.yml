@@ -1,0 +1,32 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: ingress-to-visits
+  namespace: spring-petclinic
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["istio-system"]
+    to:
+    - operation:
+        hosts: 
+        - visits-service.lab.***REMOVED***
+
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: intra-namespace-to-visits
+  namespace: spring-petclinic
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["spring-petclinic"]
+    to:
+    - operation:
+        hosts: 
+        - visits-db-mysql.lab.***REMOVED***
+        - visits-db-mysql-slave.lab.***REMOVED***
