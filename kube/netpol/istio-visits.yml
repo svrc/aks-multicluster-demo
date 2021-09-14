@@ -4,15 +4,15 @@ metadata:
   name: ingress-to-visits
   namespace: spring-petclinic
 spec:
+  selector:
+    matchLabels:
+      app: visits-service
   action: ALLOW
   rules:
   - from:
     - source:
         namespaces: ["istio-system"]
-    to:
-    - operation:
-        hosts: 
-        - visits-service.lab.***REMOVED***
+---
 
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
@@ -25,8 +25,3 @@ spec:
   - from:
     - source:
         namespaces: ["spring-petclinic"]
-    to:
-    - operation:
-        hosts: 
-        - visits-db-mysql.lab.***REMOVED***
-        - visits-db-mysql-slave.lab.***REMOVED***

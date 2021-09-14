@@ -33,14 +33,7 @@ spec:
           istio-control-plane: "true"
   - to:
     - ipBlock:
-        cidr: 10.0.9.4/32
-    ports:
-    - port: 443
-      protocol: TCP
-  - to:
-    - namespaceSelector:
-        matchLabels:
-          default: "true"
+        cidr: 34.86.88.251/32         
     ports:
     - port: 443
       protocol: TCP

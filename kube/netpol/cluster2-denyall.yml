@@ -37,10 +37,3 @@ spec:
     ports:
     - port: 443
       protocol: TCP
-  - to:
-    - namespaceSelector:
-        matchLabels:
-          default: "true"
-    ports:
-    - port: 443
-      protocol: TCP

@@ -1,13 +1,14 @@
+    
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: ingress-to-petclinic
+  name: ingress-to-vets
   namespace: spring-petclinic
 spec:
   action: ALLOW
   selector:
     matchLabels:
-      app: api-gateway
+      app: vets-service
   rules:
   - from:
     - source:
@@ -16,7 +17,7 @@ spec:
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: intra-namespace-to-customers
+  name: intra-namespace-to-vets
   namespace: spring-petclinic
 spec:
   action: ALLOW
