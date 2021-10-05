@@ -13,7 +13,7 @@ resource "azurerm_kubernetes_cluster" "control-plane" {
   location                = var.location
   resource_group_name     = azurerm_resource_group.platform.name
   dns_prefix              = "${var.environment_name}-cp"
-  private_cluster_enabled = true
+  private_cluster_enabled = false
   
   default_node_pool {
     name       = "default"
@@ -46,10 +46,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "control-plane" {
   kubernetes_cluster_id = azurerm_kubernetes_cluster.control-plane.id
   vm_size               = "Standard_D4s_v3"
   availability_zones    = [1, 2, 3]
-  enable_auto_scaling   = true
+  enable_auto_scaling   = false
   os_disk_size_gb       = 1024
-  min_count             = 3
-  max_count             = 6
+  node_count             = 8
   vnet_subnet_id = azurerm_subnet.management.id
   tags = merge(
     var.tags,
