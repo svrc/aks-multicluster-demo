@@ -94,19 +94,19 @@ data:
             proto-append: false
           routes:
             - id: vets-service
-              uri: http://vets-service.llab.***REMOVED***:8080
+              uri: http://vets-service:8080
               predicates:
                 - Path=/api/vet/**
               filters:
                 - StripPrefix=2
             - id: visits-service
-              uri: http://visits-service.lab.***REMOVED***:8080
+              uri: http://visits-service:8080
               predicates:
                 - Path=/api/visit/**
               filters:
                 - StripPrefix=2
             - id: customers-service
-              uri: http://customers-service.lab.***REMOVED***:8080
+              uri: http://customers-service:8080
               predicates:
                 - Path=/api/customer/**
               filters:
