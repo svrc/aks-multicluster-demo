@@ -52,8 +52,8 @@ data:
           wavefront:
             enabled: true
 
-    customers-service-id: http://customers-service.lab.***REMOVED***:8080
-    visits-service-id: http://vists-service.lab.***REMOVED***:8080
+    customers-service-id: http://customers-service.lab.demo.com:8080
+    visits-service-id: http://vists-service.lab.demo.com:8080
 
     spring:
       datasource:

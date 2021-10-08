@@ -12,7 +12,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "petclinic.***REMOVED***"
+    - "petclinic.demo.com"
     - "127.0.0.1"
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -22,7 +22,7 @@ metadata:
   namespace: spring-petclinic
 spec:
   hosts:
-  - "petclinic.***REMOVED***"
+  - "petclinic.demo.com"
   - "127.0.0.1"
   gateways:
   - api-gateway-petclinic
@@ -32,6 +32,6 @@ spec:
         prefix: /
     route:
     - destination:
-        host: api-gateway.lab.***REMOVED***
+        host: api-gateway.lab.demo.com
         port:
           number: 80
